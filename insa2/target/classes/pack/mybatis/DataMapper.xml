@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev">
+	<!-- 로그인 -->
+	<select id="loginInfo" parameterType="string" resultType="logindto"> 
+		<!-- 사번을 받아 사번과 비밀번호 조회 -->
+		select emp_no, empInfo_pass from empInfo
+		where emp_no=#{emp_no} 
+	</select>
+
+	<!-- 인사관리 -->
+ <select id="selectAll" resultType="empdto">
+	select e.emp_no emp_no, s.salinfo_name salinfo_name, e.jik_name jik_name, e.dept_name dept_name, e.empinfo_hiredate empinfo_hiredate, m.myinfo_tel myinfo_tel, m.myinfo_email myinfo_email, m.myinfo_addr myinfo_addr
+	from empinfo e, myinfo m, salinfo s
+	where e.emp_no = m.emp_no and m.emp_no = s.emp_no
+ </select>
+ <select id="selectSearch" parameterType="empBean" resultType="empdto">
+ 	select e.emp_no emp_no, s.salinfo_name salinfo_name, e.jik_name jik_name, e.dept_name dept_name, e.empinfo_hiredate empinfo_hiredate, m.myinfo_tel myinfo_tel, m.myinfo_email myinfo_email, m.myinfo_addr myinfo_addr
+	from empinfo e, myinfo m, salinfo s
+ 	where e.emp_no = m.emp_no and m.emp_no = s.emp_no and 
+ 			${searchName} like concat('%', #{searchValue},'%')
+ 	order by emp_no desc
+ </select>
+ <insert id="insertData" parameterType="empAllBean">
+ 	insert all
+	into empinfo  values(#{emp_no}, #{jik_no}, #{jik_name}, #{empInfo_hiredate}, #{empinfo_year}, #{empinfo_firedate}, #{empinfo_pass}, #{empinfo_status}, #{empinfo_work}, #{dept_name})
+	into salinfo values(#{emp_no}, #{salinfo_name}, #{salinfo_bank}, #{salinfo_banknum}, #{salinfo_salary}, #{salinfo_date}, #{salinfo_3month})
+	into myinfo values(#{emp_no}, #{myinfo_gen}, #{myinfo_addr}, #{myinfo_email}, #{myinfo_tel}, #{myinfo_number}, #{myinfo_helnum})
+	select *
+	from empinfo e, myinfo m, salinfo s
+	where e.emp_no = m.emp_no and m.emp_no = s.emp_no 
+ </insert>
+ 
+ 
+ <!--  급여관리 -->
+ <select id="selectovertime" resultType="int">
+		
+	</select>
+	
+ 	<select id="selectwageAll" resultType="wsdto"><!-- 완 -->
+ 		select * from wage_statement order by wage_statement_dept_name 
+ 	</select>
+ 	
+ 	<select id="searchWageByDate" resultType="wsdto" parameterType="string">
+ 		select * from wage_statement 
+ 		where wage_statement_emp_no = #{wage_statement_emp_no} order by wage_statement_mon
+ 	</select>
+ 	
+ 	<select id="searchWagebyBuserName" parameterType="string" resultType="wsdto">
+ 		select * from wage_statement where wage_statement_dept_name = #{wage_statement_dept_name} 
+ 	</select>
+ 	
+ 	<select id="searchMyWage" parameterType="wsbean" resultType="wsdto"><!-- 완 -->
+ 		select * from wage_statement where wage_statement_emp_no = #{wage_statement_emp_no}
+ 		and wage_statement_mon = #{wage_statement_mon}
+ 	</select>
+ 	
+ 	<insert id="insertwage" parameterType="wsbean"><!-- 완 -->
+ 		insert into wage_statement values(#{wage_statement_emp_no}, #{wage_statement_emp_name}, #{wage_statement_dept_name},
+ 		#{wage_statement_mon}, #{wage_statement_sal}, #{wage_statement_jikpay}, #{wage_statement_overpay}, 
+ 		#{wage_statement_specialpay}, #{wage_statement_etcpay}, #{wage_statement_bonus}, #{wage_statement_taxtarget}, 
+ 		#{wage_statement_meal}, #{wage_statement_drive}, #{wage_statement_psum}, #{wage_statement_nation}, 
+ 		#{wage_statement_helin}, #{wage_statement_carein}, #{wage_statement_empin}, #{wage_statement_intax}, 
+ 		#{wage_statement_lotax}, #{wage_statement_beforedel}, #{wage_statement_yearendtax}, #{wage_statement_dsum}, 
+ 		#{wage_statement_salary})
+ 	</insert>
+</mapper>

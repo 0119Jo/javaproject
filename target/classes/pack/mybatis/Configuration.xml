@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+<properties resource="pack/mybatis/db.properties" />
+ <typeAliases>
+ 	<!-- 로그인 -->
+	<typeAlias type="pack.login.model.LoginDto" alias="logindto"/>
+ 
+    <!-- 인사관리 -->
+ 	<typeAlias type="insa.model.EmpDto" alias="empdto"/>
+ 	<typeAlias type="insa.controller.EmpBean" alias="empBean"/>
+ 	<typeAlias type="insa.controller.EmpAllBean" alias="empAllBean"/>
+ 	
+ 	
+ 	<!-- 급여관리 -->
+ 	<typeAlias type="wage.model.wage_statement_DTO"
+			alias="wsdto" />
+		<typeAlias type="wage.controller.wage_statement_Bean"
+			alias="wsbean" />
+			
+	
+	
+ </typeAliases>
+ 
+ <environments default="dev">
+  <environment id="dev">
+   <transactionManager type="JDBC" />
+   <dataSource type="POOLED">
+    <property name="driver" value="${driver}" />
+    <property name="url" value="${url}" />
+    <property name="username" value="${username}" />
+    <property name="password" value="${password}" />
+   </dataSource>
+  </environment>
+ </environments>
+ <mappers>
+  <mapper resource="pack/mybatis/DataMapper.xml" />
+ </mappers>
+</configuration>

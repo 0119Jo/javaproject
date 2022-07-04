@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+C:\Users\have_\OneDrive\바탕 화면\[2021-01-29]insa2 프로젝트 합본\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+2208540433.index
+2115286897.index
+2092518519.index
+3780315155.index
+1741889868.index
